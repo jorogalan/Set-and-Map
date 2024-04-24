@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holidays Map Example</title>
+</head>
+<body>
+    <h1>Holidays Map Example</h1>
+
+    <div>
+        <label for="holidayName">Holiday Name:</label>
+        <input type="text" id="holidayName">
+        <label for="holidayDate">Date:</label>
+        <input type="date" id="holidayDate">
+        <button onclick="addHoliday()">Add Holiday</button>
+    </div>
+
+    <div>
+        <h2>Holidays:</h2>
+        <ul id="holidaysList"></ul>
+    </div>
+
+    <script>
+        // Create a map object for holidays
+        const holidaysMap = new Map();
+
+        // Function to add a holiday to the map
+        function addHoliday() {
+            const holidayName = document.getElementById('holidayName').value;
+            const holidayDate = document.getElementById('holidayDate').value;
+            
+            // Check if the holiday name or date is empty
+            if (!holidayName || !holidayDate) {
+                alert("Please enter both holiday name and date.");
+                return;
+            }
+
+            // Add the holiday to the map
+            holidaysMap.set(holidayDate, holidayName);
+
+            // Clear input fields
+            document.getElementById('holidayName').value = '';
+            document.getElementById('holidayDate').value = '';
+
+            // Update holidays list
+            displayHolidays();
+        }
+
+        // Function to display holidays in the list
+        function displayHolidays() {
+            const holidaysList = document.getElementById('holidaysList');
+            holidaysList.innerHTML = '';
+
+            holidaysMap.forEach((name, date) => {
+                const li = document.createElement('li');
+                li.textContent = `${name} - ${date}`;
+                holidaysList.appendChild(li);
+            });
+        }
+
+        // Initial display of holidays
+        displayHolidays();
+    </script>
+</body>
+</html>
