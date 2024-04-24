@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UnionSet Example</title>
+</head>
+<body>
+    <h1>UnionSet Example</h1>
+
+    <button onclick="performUnion()">Perform Union</button>
+
+    <div>
+        Set 1:
+        <input type="text" id="set1Input">
+        <button onclick="addToSet(1)">Add</button>
+    </div>
+    <div>
+        Set 2:
+        <input type="text" id="set2Input">
+        <button onclick="addToSet(2)">Add</button>
+    </div>
+
+    <h2>UnionSet Contents:</h2>
+    <ul id="unionSetList"></ul>
+
+    <script>
+        // UnionSet implementation
+        class UnionSet {
+            constructor() {
+                this.set = new Set();
+            }
+
+            add(value) {
+                this.set.add(value);
+            }
+
+            has(value) {
+                return this.set.has(value);
+            }
+
+            forEach(callback) {
+                this.set.forEach(callback);
+            }
+
+            delete(value) {
+                this.set.delete(value);
+            }
+
+            size() {
+                return this.set.size;
+            }
+
+            clear() {
+                this.set.clear();
+            }
+
+            union(otherSet) {
+                otherSet.forEach(value => {
+                    this.add(value);
+                });
+            }
+        }
+
+        // Create a new UnionSet instance
+        const unionSet = new UnionSet();
+
+        // Function to add elements to the UnionSet
+        function addToSet(setNumber) {
+            const inputValue = document.getElementById(`set${setNumber}Input`).value;
+            unionSet.add(inputValue);
+            document.getElementById(`set${setNumber}Input`).value = '';
+        }
+
+        // Function to perform union of two sets
+        function performUnion() {
+            const set1 = new Set(document.getElementById('set1Input').value.split(','));
+            const set2 = new Set(document.getElementById('set2Input').value.split(','));
+            unionSet.clear();
+            unionSet.union(set1);
+            unionSet.union(set2);
+            displayUnionSet();
+        }
+
+        // Function to display UnionSet contents
+        function displayUnionSet() {
+            const unionSetList = document.getElementById('unionSetList');
+            unionSetList.innerHTML = '';
+            unionSet.forEach(value => {
+                const li = document.createElement('li');
+                li.textContent = value;
+                unionSetList.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
